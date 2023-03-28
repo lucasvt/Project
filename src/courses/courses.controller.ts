@@ -1,5 +1,5 @@
 import { Controller, Get, HttpStatus } from '@nestjs/common';
-import { Body, HttpCode, Param, Post, Res } from '@nestjs/common/decorators';
+import { Body, HttpCode, Param, Patch, Post, Res } from '@nestjs/common/decorators';
 import { response } from 'express';
 
 @Controller('courses')
@@ -9,15 +9,20 @@ export class CoursesController {
         return response.status(200).send('Listagen de Cursos');
     }
     @Get(':id')
-    findOne(@Param() params ) {
-        return `Curso #${params.id}`;
+    findOne(@Param('id') id :string ) {
+        return `Curso #${id}`;
     }
 
     @Post()
     @HttpCode(HttpStatus.NO_CONTENT)
-    create(@Body('name') body) {
+    create(@Body() body) {
         return body;
 
     }
     
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() body){
+        return `Atualização do Curso #${id}`;
+    }
+
 }
