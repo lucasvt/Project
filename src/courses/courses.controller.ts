@@ -1,5 +1,5 @@
 import { Controller, Get, HttpStatus } from '@nestjs/common';
-import { Body, HttpCode, Param, Patch, Post, Res } from '@nestjs/common/decorators';
+import { Body, Delete, HttpCode, Param, Patch, Post, Res } from '@nestjs/common/decorators';
 import { response } from 'express';
 
 @Controller('courses')
@@ -25,4 +25,8 @@ export class CoursesController {
         return `Atualização do Curso #${id}`;
     }
 
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        return `Exclusão do Curso #${id}`;
+    }
 }
