@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { response } from 'express';
 import { Course } from './entities/course.entity';
 
 @Injectable()
 export class CourseService {
     private courses: Course[] = [
         {
-            id: 1,
+            id: 10,
             name: 'Fundamentos do framework NestJs',
             description: 'Fundamentos do framework NestJs',
             tags: ['nodeJs', 'nestJs', 'javaScript'],
@@ -17,7 +18,14 @@ export class CourseService {
     }
 
     findOne(id: string) {
-        return this.courses.find((course : Course) => course.id === Number(id));
+        const course = this.courses.find((course : Course) => course.id === Number(id));
+
+        if(!course) {
+            throw new HttpException(
+                `Course ID ${id} not found`,
+                HttpStatus.NOT_FOUND,
+            );
+        }
     }
 
     create(createCourseDto: any) {
@@ -32,13 +40,13 @@ export class CourseService {
         this.courses[indexCourse] = updateCourseDto;
     }
 
-    remove(id: string, updateCourseDto: any) {
+    remove(id: string) {
         const indexCourse = this.courses.findIndex(
             (course: Course) => course.id === Number(id),
         );
 
         if(indexCourse >= 0) {
-            this.courses.splice(indexCourse, deleteCount:1);
+            this.courses.splice(indexCourse, 1);
         }
     }
 }

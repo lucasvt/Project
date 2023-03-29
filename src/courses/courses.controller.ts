@@ -1,6 +1,5 @@
-import { Controller, Get, HttpStatus } from '@nestjs/common';
-import { Body, Delete, HttpCode, Param, Patch, Post, Res } from '@nestjs/common/decorators';
-import { response } from 'express';
+import { Controller, Get } from '@nestjs/common';
+import { Body, Delete, Param, Patch, Post} from '@nestjs/common/decorators';
 import { CourseService } from './courses.service';
 
 @Controller('courses')
@@ -8,7 +7,7 @@ export class CoursesController {
     constructor(private readonly courseService: CourseService) {}
 
     @Get()
-    findAll(@Res() response) {
+    findAll() {
         return this.courseService.findAll();
     }
     @Get(':id')
